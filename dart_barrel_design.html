@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ダーツバレル 3Dデザイン</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="container"></div>
+    <canvas id="canvas2d"></canvas>
+    
+    <div id="controls">
+        <h3>バレルデザイン設定</h3>
+        
+        <div class="control-group">
+            <label for="length">長さ (mm)</label>
+            <input type="range" id="length" min="35" max="60" value="50" step="1">
+            <div class="value-display" id="lengthValue">50mm</div>
+        </div>
+        
+        <div class="control-group">
+            <label for="diameter">直径 (mm)</label>
+            <input type="range" id="diameter" min="6" max="8.5" value="7.2" step="0.1">
+            <div class="value-display" id="diameterValue">7.2mm</div>
+        </div>
+        
+        <div class="control-group">
+            <label for="weight">重量 (g)</label>
+            <input type="range" id="weight" min="16" max="26" value="20" step="0.5">
+            <div class="value-display" id="weightValue">20g</div>
+        </div>
+        
+        <div class="control-group">
+            <label for="gripType">グリップタイプ</label>
+            <button onclick="setGripType('straight')">ストレート</button>
+            <button onclick="setGripType('torpedo')">トーピード</button>
+            <button onclick="setGripType('scallop')">スカロップ</button>
+        </div>
+        
+        <div class="control-group">
+            <label for="material">材質</label>
+            <button onclick="setMaterial('tungsten')">タングステン</button>
+            <button onclick="setMaterial('brass')">ブラス</button>
+            <button onclick="setMaterial('titanium')">チタン</button>
+        </div>
+        
+        <div class="control-group">
+            <label>表示モード</label>
+            <button onclick="setViewMode('3d')" id="btn3d">3Dビュー</button>
+            <button onclick="setViewMode('2d')" id="btn2d">平面図</button>
+        </div>
+    </div>
+    
+    <div id="info">
+        <h4>バレル仕様</h4>
+        <div class="spec-table">
+            <div class="spec-row"><span>長さ:</span><span id="specLength">50mm</span></div>
+            <div class="spec-row"><span>直径:</span><span id="specDiameter">7.2mm</span></div>
+            <div class="spec-row"><span>重量:</span><span id="specWeight">20g</span></div>
+            <div class="spec-row"><span>材質:</span><span id="specMaterial">タングステン</span></div>
+            <div class="spec-row"><span>グリップ:</span><span id="specGrip">ストレート</span></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="barrel-designer.js"></script>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        #container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        #controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+            z-index: 100;
+            min-width: 250px;
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .value-display {
+            font-size: 12px;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        button.active {
+            background: #2196F3;
+        }
+        
+        button.active:hover {
+            background: #1976D2;
+        }
+        
+        #canvas2d {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: white;
+            display: none;
+        }
+        
+        #info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 100;
+        }
+        
+        .spec-table {
+            margin-top: 10px;
+        }
+        
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+    </style>
+</body>
+</html>
